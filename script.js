@@ -10,6 +10,10 @@ let carrito = [];
 let remitoActual = null;
 let productos = [];   // Aquí se guardan los productos del JSON
 
+// 🔹 Variables para paginación
+let paginaActual = 1;
+const productosPorPagina = 20;
+
 // Cargar productos desde JSON
 async function cargarProductos() {
   const res = await fetch("products.json");
@@ -17,8 +21,8 @@ async function cargarProductos() {
   // No mostramos nada hasta que elijan categoría
 }
 
-// Mostrar productos filtrados por categoría
-function mostrarProductos(categoria) {
+// Mostrar productos filtrados por categoría con paginación
+function mostrarProductos(categoria, pagina = 1) {
   const contenedor = document.getElementById("productos");
   contenedor.innerHTML = "";
 
@@ -29,7 +33,13 @@ function mostrarProductos(categoria) {
     return;
   }
 
-  filtrados.forEach(prod => {
+  // 🔹 Paginación
+  const inicio = (pagina - 1) * productosPorPagina;
+  const fin = inicio + productosPorPagina;
+  const paginaProductos = filtrados.slice(inicio, fin);
+
+  // Mostrar productos de la página actual
+  paginaProductos.forEach(prod => {
     const div = document.createElement("div");
     div.classList.add("producto");
     div.innerHTML = `
@@ -42,6 +52,26 @@ function mostrarProductos(categoria) {
     `;
     contenedor.appendChild(div);
   });
+
+  // 🔹 Controles de paginación
+  const paginacion = document.createElement("div");
+  paginacion.classList.add("paginacion");
+
+  if (pagina > 1) {
+    const btnPrev = document.createElement("button");
+    btnPrev.textContent = "⬅ Anterior";
+    btnPrev.onclick = () => mostrarProductos(categoria, pagina - 1);
+    paginacion.appendChild(btnPrev);
+  }
+
+  if (fin < filtrados.length) {
+    const btnNext = document.createElement("button");
+    btnNext.textContent = "Siguiente ➡";
+    btnNext.onclick = () => mostrarProductos(categoria, pagina + 1);
+    paginacion.appendChild(btnNext);
+  }
+
+  contenedor.appendChild(paginacion);
 }
 
 // ----------------- RESTO DEL CÓDIGO (Carrito y Remito) -----------------

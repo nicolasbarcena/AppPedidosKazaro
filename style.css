@@ -284,3 +284,30 @@ h2 {
     font-size: 0.9rem;
   }
 }
+.paginacion {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.paginacion button {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.paginacion button:hover {
+  background: #45a049;
+}
+
+@media (max-width: 600px) {
+  .paginacion {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
