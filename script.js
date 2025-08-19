@@ -9,27 +9,27 @@ emailjs.init(EMAILJS_PUBLIC_KEY);
 let carrito = [];
 let remitoActual = null;
 let productos = [];   // Aquí se guardan los productos del JSON
-let paginaActual = 1;
-const productosPorPagina = 20;
 
 // Cargar productos desde JSON
 async function cargarProductos() {
   const res = await fetch("products.json");
   productos = await res.json();
-  mostrarPagina(paginaActual);
-  renderPaginacion();
+  // No mostramos nada hasta que elijan categoría
 }
 
-// Mostrar productos de la página actual
-function mostrarPagina(pagina) {
+// Mostrar productos filtrados por categoría
+function mostrarProductos(categoria) {
   const contenedor = document.getElementById("productos");
   contenedor.innerHTML = "";
 
-  const inicio = (pagina - 1) * productosPorPagina;
-  const fin = inicio + productosPorPagina;
-  const productosPagina = productos.slice(inicio, fin);
+  const filtrados = productos.filter(p => p.category === categoria);
 
-  productosPagina.forEach(prod => {
+  if (filtrados.length === 0) {
+    contenedor.innerHTML = "<p>No hay productos en esta categoría.</p>";
+    return;
+  }
+
+  filtrados.forEach(prod => {
     const div = document.createElement("div");
     div.classList.add("producto");
     div.innerHTML = `
@@ -42,33 +42,6 @@ function mostrarPagina(pagina) {
     `;
     contenedor.appendChild(div);
   });
-}
-
-// Renderizar botones de paginación
-function renderPaginacion() {
-  const totalPaginas = Math.ceil(productos.length / productosPorPagina);
-  const paginacionDiv = document.createElement("div");
-  paginacionDiv.classList.add("paginacion");
-
-  for (let i = 1; i <= totalPaginas; i++) {
-    const boton = document.createElement("button");
-    boton.textContent = i;
-    boton.classList.add("pagina-btn");
-    if (i === paginaActual) boton.classList.add("activo");
-    boton.addEventListener("click", () => {
-      paginaActual = i;
-      mostrarPagina(paginaActual);
-      document.querySelectorAll(".pagina-btn").forEach(b => b.classList.remove("activo"));
-      boton.classList.add("activo");
-    });
-    paginacionDiv.appendChild(boton);
-  }
-
-  // Insertar la paginación después de los productos
-  const catalogo = document.querySelector(".catalogo");
-  const paginacionExistente = catalogo.querySelector(".paginacion");
-  if (paginacionExistente) paginacionExistente.remove();
-  catalogo.appendChild(paginacionDiv);
 }
 
 // ----------------- RESTO DEL CÓDIGO (Carrito y Remito) -----------------
@@ -128,21 +101,15 @@ function eliminarDelCarrito(index) {
 }
 
 function generarNumeroRemito() {
-  // Año en 2 dígitos + Mes + Día
   const fecha = new Date();
   const dd = String(fecha.getDate()).padStart(2, "0");
   const mm = String(fecha.getMonth() + 1).padStart(2, "0");
   const yy = fecha.getFullYear().toString().slice(-2);
-
-  // Hora + Minuto + Segundo (para asegurar que no se repita)
   const hh = String(fecha.getHours()).padStart(2, "0");
   const mi = String(fecha.getMinutes()).padStart(2, "0");
   const ss = String(fecha.getSeconds()).padStart(2, "0");
-
-  // Remito con formato: REM-YYMMDD-HHMMSS
   return `REM-${dd}${mm}${yy}-${hh}${mi}${ss}`;
 }
-
 
 function finalizarPedido() {
   const cliente = document.getElementById("cliente").value.trim();
@@ -194,7 +161,6 @@ function mostrarRemito(remito) {
 async function enviarEmail() {
   if (!remitoActual) return alert("No hay remito para enviar.");
 
-  // Convertimos los items a filas de tabla HTML
   const detalleHTML = remitoActual.items.map(i => `
   <tr>
     <td style="border:1px solid #ddd; padding:6px;">${i.code}</td>
@@ -205,14 +171,13 @@ async function enviarEmail() {
   </tr>
    `).join("");
 
- 
   try {
     await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
       numero: remitoActual.numero,
       cliente: remitoActual.cliente,
       fecha: remitoActual.fecha,
       total: remitoActual.total.toFixed(2),
-      detalle: detalleHTML  // 👈 lo mandamos como string
+      detalle: detalleHTML
     });
     alert("Remito enviado con éxito.");
   } catch (err) {
@@ -220,7 +185,6 @@ async function enviarEmail() {
     alert("Error al enviar el remito.");
   }
 }
-
 
 // Eventos
 document.getElementById("finalizar").addEventListener("click", finalizarPedido);

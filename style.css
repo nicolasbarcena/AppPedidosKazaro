@@ -1,235 +1,286 @@
-/* ===== Estilos generales ===== */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* ===== Reset ===== */
+* {
   margin: 0;
   padding: 0;
-  background: linear-gradient(135deg, #0d47a1, #1976d2);
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: #f4f6f8;
   color: #333;
+  line-height: 1.5;
+  padding: 10px;
 }
 
 .container {
-  max-width: 900px;
-  margin: 20px auto;
-  padding: 20px;
+  max-width: 1100px;
+  margin: auto;
   background: #fff;
+  padding: 20px;
   border-radius: 12px;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-  animation: fadeIn 0.6s ease-in-out;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
+/* ===== Títulos ===== */
 h1 {
   text-align: center;
-  font-size: 2.5rem;
-  color: #0d47a1;
+  font-size: 2rem;
   margin-bottom: 20px;
+  color: #2c3e50;
 }
 
-/* ===== Secciones ===== */
-section {
-  margin-bottom: 30px;
-  padding: 15px;
-  border-radius: 10px;
-  background: #f4f7fb;
-  transition: transform 0.2s ease-in-out;
+h2 {
+  margin: 20px 0 10px;
+  color: #34495e;
+  font-size: 1.4rem;
 }
 
-section:hover { transform: scale(1.01); }
-
-/* ===== Labels ===== */
-label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 5px;
-  color: #0d47a1;
-}
-
-/* ===== Inputs generales ===== */
-input[type="text"],
-input[type="number"] {
+/* ===== Formulario cliente ===== */
+.form-section input {
   width: 100%;
-  max-width: 400px;
-  padding: 12px;
-  margin: 8px 0 15px;
-  border: 2px solid #1976d2;
-  border-radius: 8px;
-  outline: none;
-  box-sizing: border-box;
-  font-size: 1rem;
-  display: block;
-}
-
-/* ===== Inputs dentro de tablas ===== */
-table input[type="text"],
-table input[type="number"] {
-  width: 70px;
-  padding: 6px;
-  margin: 0;
-  text-align: center;
-  border: 1px solid #1976d2;
+  padding: 10px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
   border-radius: 6px;
-  font-size: 0.9rem;
-  box-sizing: border-box;
+  font-size: 1rem;
 }
 
-/* ===== Productos ===== */
+/* ===== Categorías ===== */
+.categoria-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 20px 0;
+  justify-content: center;
+}
+
+.categoria-btn {
+  flex: 1 1 180px;
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.3s;
+}
+
+.categoria-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.categoria-btn:active {
+  transform: scale(0.97);
+}
+
+/* ===== Catálogo ===== */
+.catalogo #productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
 .producto {
-  border: 1px solid #ddd;
+  border: 1px solid #e0e0e0;
   border-radius: 10px;
-  padding: 15px; 
-  margin: 10px 0;
+  padding: 18px;
   background: #ffffff;
-  transition: box-shadow 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.3s;
 }
 
-.producto:hover { box-shadow: 0px 4px 12px rgba(20, 44, 228, 0.751); }
+.producto:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+}
 
 .producto h3 {
-  margin: 0 0 5px;
-  color: #0d47a1;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  color: #2c3e50;
 }
 
-/* ===== Tablas ===== */
-table {
+.producto p {
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  color: #555;
+}
+
+.producto button {
+  margin-top: auto;
+  background: linear-gradient(135deg, #27ae60, #1e8449);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s;
+}
+
+.producto button:hover {
+  background: linear-gradient(135deg, #1e8449, #145a32);
+  transform: translateY(-2px);
+}
+
+/* ===== Carrito ===== */
+.carrito {
+  overflow-x: auto; /* ✅ scroll en móviles */
+}
+
+.carrito table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 15px;
-  background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-thead {
-  background: #1976d2;
-  color: #fff;
   font-size: 0.95rem;
+  min-width: 500px; /* ✅ asegura que se pueda scrollear si no entra */
 }
 
-th, td {
-  padding: 12px;
+.carrito th, 
+.carrito td {
+  border: 1px solid #ddd;
+  padding: 10px;
   text-align: center;
-  border-bottom: 1px solid #ddd;
-  vertical-align: middle;
 }
 
-tr:hover { background: rgba(25, 118, 210, 0.05); }
-
-/* Carrito tabla scroll en móvil */
-.carrito table {
-  display: block;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch; /* scroll suave en iOS */
-  white-space: nowrap;
+.carrito th {
+  background: #3498db;
+  color: #fff;
 }
 
-.carrito th, .carrito td {
-  word-wrap: break-word;
-  max-width: 150px;
+.carrito input[type="number"] {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
 }
 
-td {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 150px;
+.total {
+  margin-top: 15px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: right;
 }
 
-/* ===== Botones ===== */
-button {
-  background: #1976d2;
+#finalizar {
+  background: #e67e22;
   color: #fff;
   border: none;
   padding: 12px 18px;
-  border-radius: 8px;
-  font-size: 1rem;
+  border-radius: 6px;
   cursor: pointer;
-  margin-top: 15px;
-  transition: 0.3s;
+  margin-top: 10px;
+  transition: background 0.3s;
+  width: 100%; /* ✅ full width en móviles */
 }
 
-button:hover {
-  background: #0d47a1;
-  transform: translateY(-2px);
-  box-shadow: 0px 4px 12px rgba(25, 118, 210, 0.4);
+#finalizar:hover {
+  background: #ca6f1e;
 }
 
-button:active {
-  transform: translateY(0);
-  box-shadow: none;
-}
-
-/* ===== Total ===== */
-.total {
-  font-size: 1.3rem;
-  font-weight: bold;
-  text-align: right;
-  margin-top: 15px;
-  color: #0d47a1;
-}
-
-/* ===== Paginación ===== */
-.paginacion {
+/* ===== Remito ===== */
+.remito {
   margin-top: 20px;
+  padding: 15px;
+  background: #fdfdfd;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow-x: auto; /* ✅ scroll si la tabla no entra */
+}
+
+.remito table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  min-width: 400px;
+}
+
+.remito th, 
+.remito td {
+  border: 1px solid #ddd;
+  padding: 8px;
   text-align: center;
 }
 
-.paginacion button {
-  margin: 5px;
-  padding: 8px 14px;
-  border-radius: 6px;
+#enviar {
+  background: #8e44ad;
+  color: #fff;
   border: none;
-  background: #1976d2;
-  color: white;
+  padding: 12px 18px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: 0.3s;
+  margin-top: 15px;
+  transition: background 0.3s;
+  width: 100%; /* ✅ ocupa todo el ancho en móviles */
 }
 
-.paginacion button:hover,
-.paginacion .activo {
-  background: #0d47a1;
-  font-weight: bold;
-}
-
-/* ===== Animaciones ===== */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+#enviar:hover {
+  background: #6c3483;
 }
 
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
-  .container { padding: 15px; }
-  h1 { font-size: 1.8rem; }
-  th, td { font-size: 0.85rem; padding: 8px; max-width: 100px; }
+  h1 {
+    font-size: 1.8rem;
+  }
 
-  /* Botones → ancho completo en mobile */
-  button { width: 100%; }
+  .categoria-btn {
+    flex: 1 1 45%; /* ✅ dos botones por fila en tablets */
+  }
 
-  /* Inputs fuera de tablas → ancho completo */
-  input[type="text"],
-  input[type="number"] {
-    width: 100%;
-    max-width: 100%;
-    font-size: 1rem;
+  .carrito table, 
+  .remito table {
+    font-size: 0.85rem;
+  }
+  
+  .carrito th, 
+  .carrito td {
+    padding: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  .categoria-btn {
+    flex: 1 1 100%; /* ✅ botones uno debajo del otro */
     padding: 12px;
+    font-size: 0.9rem;
   }
 
-  /* Inputs dentro de tabla → compactos */
-  table input[type="number"],
-  table input[type="text"] {
-    width: 100%;
-    max-width: 70px;
+  .catalogo #productos {
+    grid-template-columns: 1fr; /* ✅ productos en 1 columna */
   }
 
-  /* Texto en celdas → varias líneas */
-  td {
-    white-space: normal;
-    max-width: 120px;
-    word-break: break-word;
+  .producto {
+    padding: 14px;
   }
 
-  /* Secciones → más compactas */
-  section {
+  .producto h3 {
+    font-size: 1rem;
+  }
+
+  .producto p {
+    font-size: 0.85rem;
+  }
+
+  .producto button {
     padding: 10px;
-    margin-bottom: 20px;
+    font-size: 0.9rem;
   }
 }
