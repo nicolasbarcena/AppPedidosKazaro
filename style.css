@@ -1,0 +1,235 @@
+/* ===== Estilos generales ===== */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #0d47a1, #1976d2);
+  color: #333;
+}
+
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #0d47a1;
+  margin-bottom: 20px;
+}
+
+/* ===== Secciones ===== */
+section {
+  margin-bottom: 30px;
+  padding: 15px;
+  border-radius: 10px;
+  background: #f4f7fb;
+  transition: transform 0.2s ease-in-out;
+}
+
+section:hover { transform: scale(1.01); }
+
+/* ===== Labels ===== */
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #0d47a1;
+}
+
+/* ===== Inputs generales ===== */
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px;
+  margin: 8px 0 15px;
+  border: 2px solid #1976d2;
+  border-radius: 8px;
+  outline: none;
+  box-sizing: border-box;
+  font-size: 1rem;
+  display: block;
+}
+
+/* ===== Inputs dentro de tablas ===== */
+table input[type="text"],
+table input[type="number"] {
+  width: 70px;
+  padding: 6px;
+  margin: 0;
+  text-align: center;
+  border: 1px solid #1976d2;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+/* ===== Productos ===== */
+.producto {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px; 
+  margin: 10px 0;
+  background: #ffffff;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.producto:hover { box-shadow: 0px 4px 12px rgba(20, 44, 228, 0.751); }
+
+.producto h3 {
+  margin: 0 0 5px;
+  color: #0d47a1;
+}
+
+/* ===== Tablas ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+thead {
+  background: #1976d2;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  vertical-align: middle;
+}
+
+tr:hover { background: rgba(25, 118, 210, 0.05); }
+
+/* Carrito tabla scroll en móvil */
+.carrito table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* scroll suave en iOS */
+  white-space: nowrap;
+}
+
+.carrito th, .carrito td {
+  word-wrap: break-word;
+  max-width: 150px;
+}
+
+td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 150px;
+}
+
+/* ===== Botones ===== */
+button {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #0d47a1;
+  transform: translateY(-2px);
+  box-shadow: 0px 4px 12px rgba(25, 118, 210, 0.4);
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* ===== Total ===== */
+.total {
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-align: right;
+  margin-top: 15px;
+  color: #0d47a1;
+}
+
+/* ===== Paginación ===== */
+.paginacion {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.paginacion button {
+  margin: 5px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  background: #1976d2;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.paginacion button:hover,
+.paginacion .activo {
+  background: #0d47a1;
+  font-weight: bold;
+}
+
+/* ===== Animaciones ===== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .container { padding: 15px; }
+  h1 { font-size: 1.8rem; }
+  th, td { font-size: 0.85rem; padding: 8px; max-width: 100px; }
+
+  /* Botones → ancho completo en mobile */
+  button { width: 100%; }
+
+  /* Inputs fuera de tablas → ancho completo */
+  input[type="text"],
+  input[type="number"] {
+    width: 100%;
+    max-width: 100%;
+    font-size: 1rem;
+    padding: 12px;
+  }
+
+  /* Inputs dentro de tabla → compactos */
+  table input[type="number"],
+  table input[type="text"] {
+    width: 100%;
+    max-width: 70px;
+  }
+
+  /* Texto en celdas → varias líneas */
+  td {
+    white-space: normal;
+    max-width: 120px;
+    word-break: break-word;
+  }
+
+  /* Secciones → más compactas */
+  section {
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+}
