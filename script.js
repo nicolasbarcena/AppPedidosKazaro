@@ -74,7 +74,7 @@ function mostrarProductos(categoria, pagina = 1) {
   contenedor.appendChild(paginacion);
 }
 
-// ----------------- RESTO DEL CÓDIGO (Carrito y Remito) -----------------
+// ---- RESTO DEL CÓDIGO (Carrito y Remito) -----
 
 function agregarAlCarrito(code, description, price) {
   const existente = carrito.find(p => p.code === code);
