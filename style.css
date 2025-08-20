@@ -78,58 +78,106 @@ h2 {
   transform: scale(0.97);
 }
 
-/* ===== Catálogo ===== */
+/* ===== Catálogo Moderno ===== */
 .catalogo #productos {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px;
+  margin-top: 30px;
+  padding: 10px;
 }
 
+/* Tarjeta de producto */
 .producto {
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  padding: 18px;
+  border: none;
+  border-radius: 16px;
+  padding: 20px;
   background: #ffffff;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.2s ease, box-shadow 0.3s;
+  justify-content: flex-start;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.4s ease;
+  position: relative;
+  overflow: hidden;
 }
 
+/* Barra de color decorativa */
+.producto::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 6px;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+}
+
+/* Animación hover */
 .producto:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
 }
 
+/* Imagen */
+.producto img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 14px;
+  transition: transform 0.4s ease;
+}
+
+.producto:hover img {
+  transform: scale(1.05);
+}
+
+/* Título */
 .producto h3 {
-  font-size: 1.1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
   margin-bottom: 8px;
   color: #2c3e50;
+  transition: color 0.3s;
 }
 
+.producto:hover h3 {
+  color: #000000;
+}
+
+/* Descripción */
 .producto p {
-  font-size: 0.9rem;
-  margin-bottom: 6px;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
   color: #555;
+  flex-grow: 1;
+  line-height: 1.4;
 }
 
+/* Botón */
 .producto button {
   margin-top: auto;
-  background: linear-gradient(135deg, #27ae60, #1e8449);
+  background: #27ae60;
   color: #fff;
   border: none;
-  border-radius: 6px;
+  border-radius: 10px;
   padding: 12px;
-  font-size: 0.95rem;
+  font-size: 1rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: transform 0.2s, background 0.3s;
+  transition: all 0.3s ease;
+  /*box-shadow: inset 0 -3px 0 rgba(0,0,0,0.15)*/
 }
 
 .producto button:hover {
-  background: linear-gradient(135deg, #1e8449, #145a32);
+  background: linear-gradient(135deg, #219150, #27ae60);
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
 }
+
+.producto button:focus-visible {
+  outline: 3px solid #4facfe;
+  outline-offset: 3px;
+}
+
 
 /* ===== Carrito ===== */
 .carrito {
@@ -311,3 +359,4 @@ h2 {
     gap: 8px;
   }
 }
+
