@@ -17,7 +17,7 @@
 
     <!-- Datos del cliente -->
     <section class="form-section">
-      <h2>Datos Delvsgsdgadhadfhadfdg Cliente</h2>
+      <h2>Datos Del Cliente</h2>
       <label for="cliente">Nombre y Apellido:</label>
       <input type="text" id="cliente" placeholder="Ingrese su nombre completo" required>
     </section>
@@ -71,17 +71,13 @@
   </div>
   
   <!-- Script -->
-   <!-- Script para registrar el Service Worker -->
-<script>
+   <script>
   if ("serviceWorker" in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register("/sw.js")
-        .then(reg => console.log("Service Worker registrado:", reg))
-        .catch(err => console.error("Error registrando SW:", err));
-    });
+    navigator.serviceWorker.register("/sw.js")
+      .then(reg => console.log("Service Worker registrado:", reg))
+      .catch(err => console.error("Error registrando SW:", err));
   }
 </script>
-
 
   <script src="script.js"></script>
 </body>
