@@ -12,7 +12,7 @@ let productos = [];   // Aquí se guardan los productos del JSON
 
 // 🔹 Variables para paginación
 let paginaActual = 1;
-const productosPorPagina = 20;
+const productosPorPagina = 15;
 
 // Cargar productos desde JSON
 async function cargarProductos() {
