@@ -5,12 +5,12 @@ const TEMPLATE_ID = "template_462n4v4";
 
 emailjs.init(EMAILJS_PUBLIC_KEY);
 
-// Variables globales
+// Variables 
 let carrito = [];
 let remitoActual = null;
-let productos = [];   // Aquí se guardan los productos del JSON
+let productos = [];   
 
-// 🔹 Variables para paginación
+// Variables para paginación
 let paginaActual = 1;
 const productosPorPagina = 15;
 
@@ -18,7 +18,6 @@ const productosPorPagina = 15;
 async function cargarProductos() {
   const res = await fetch("products.json");
   productos = await res.json();
-  // No mostramos nada hasta que elijan categoría
 }
 
 // Mostrar productos filtrados por categoría con paginación
@@ -33,7 +32,7 @@ function mostrarProductos(categoria, pagina = 1) {
     return;
   }
 
-  // 🔹 Paginación
+  // Paginación
   const inicio = (pagina - 1) * productosPorPagina;
   const fin = inicio + productosPorPagina;
   const paginaProductos = filtrados.slice(inicio, fin);
@@ -53,7 +52,7 @@ function mostrarProductos(categoria, pagina = 1) {
     contenedor.appendChild(div);
   });
 
-  // 🔹 Controles de paginación
+  // Controles de paginación
   const paginacion = document.createElement("div");
   paginacion.classList.add("paginacion");
 
@@ -74,7 +73,7 @@ function mostrarProductos(categoria, pagina = 1) {
   contenedor.appendChild(paginacion);
 }
 
-// ---- RESTO DEL CÓDIGO (Carrito y Remito) -----
+// Carrito y Remito
 
 function agregarAlCarrito(code, description, price) {
   const existente = carrito.find(p => p.code === code);
