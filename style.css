@@ -79,9 +79,12 @@ h2 {
 }
 
 
-.categoria-btn:active {
-  transform: scale(0.97);
+.categoria-btn.active {
+  background: linear-gradient(135deg, #1abc9c, #16a085);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transform: scale(1.05);
 }
+
 
 /* ===== Catálogo Moderno ===== */
 .catalogo #productos {
