@@ -45,6 +45,7 @@ function mostrarProductos(categoria, pagina = 1) {
       <h3>${prod.description}</h3>
       <p>Código: ${prod.code}</p>
       <p>Precio: $${prod.price}</p>
+      <p>Stock: ${prod.stock}</p>
       <button onclick="agregarAlCarrito('${prod.code}','${prod.description}',${prod.price})">
         Agregar
       </button>
