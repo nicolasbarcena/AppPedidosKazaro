@@ -1,26 +1,33 @@
-// EmailJS
+
+// EmailJS Config
+
 const EMAILJS_PUBLIC_KEY = "g94YTgSjLp2km1bcS";
 const SERVICE_ID = "service_40ttmon";
 const TEMPLATE_ID = "template_462n4v4";
 
 emailjs.init(EMAILJS_PUBLIC_KEY);
 
-// Variables 
+
+// Variables
+
 let carrito = [];
 let remitoActual = null;
-let productos = [];   
+let productos = [];
 
-// Variables para paginacion
 let paginaActual = 1;
 const productosPorPagina = 15;
 
+
 // Cargar productos desde JSON
+
 async function cargarProductos() {
   const res = await fetch("products.json");
   productos = await res.json();
 }
 
-// Mostrar productos filtrados por categoria 
+
+// Mostrar productos filtrados por categoría
+
 function mostrarProductos(categoria, pagina = 1) {
   const contenedor = document.getElementById("productos");
   contenedor.innerHTML = "";
@@ -32,7 +39,7 @@ function mostrarProductos(categoria, pagina = 1) {
     return;
   }
 
-  // Paginacion
+  // Paginación
   const inicio = (pagina - 1) * productosPorPagina;
   const fin = inicio + productosPorPagina;
   const paginaProductos = filtrados.slice(inicio, fin);
@@ -46,7 +53,7 @@ function mostrarProductos(categoria, pagina = 1) {
       <h3>${prod.description}</h3>
       <p>Código: ${prod.code}</p>
       <p>Precio: $${prod.price}</p>
-      <p>Stock: <span id="stock-${prod.code}">${prod.stock}</span></p>
+      <p>Stock: <span id="stock-${prod.code}">${prod.stock}</span></p> 
       <button id="btn-${prod.code}" 
         ${prod.stock <= 0 ? "disabled" : ""} 
         onclick="agregarAlCarrito('${prod.code}','${prod.description}',${prod.price})">
@@ -57,8 +64,8 @@ function mostrarProductos(categoria, pagina = 1) {
     contenedor.appendChild(div);
   });
 
-  // Controles de paginacion
-  const paginacion = document.createElement("div");
+  // Controles de paginación
+  const paginacion = document.createElement("div"); 
   paginacion.classList.add("paginacion");
 
   if (pagina > 1) {
@@ -78,10 +85,13 @@ function mostrarProductos(categoria, pagina = 1) {
   contenedor.appendChild(paginacion);
 }
 
-// Agregar al carrito segun stock
+
+// Agregar al carrito según stock
+
 function agregarAlCarrito(code, description, price) {
   const producto = productos.find(p => p.code === code);
 
+  // 🔴 Validación de stock
   if (!producto || producto.stock <= 0) {
     alert("Este producto no tiene stock disponible.");
     return;
@@ -93,7 +103,7 @@ function agregarAlCarrito(code, description, price) {
     if (existente.cantidad < producto.stock) {
       existente.cantidad++;
       existente.subtotal = existente.cantidad * existente.price;
-      producto.stock--; 
+      producto.stock--;
     } else {
       alert(`Solo quedan ${producto.stock} unidades disponibles.`);
     }
@@ -112,7 +122,7 @@ function agregarAlCarrito(code, description, price) {
   const stockSpan = document.getElementById(`stock-${code}`);
   if (stockSpan) stockSpan.textContent = producto.stock;
 
-  // Si llega a 0, desactivar boton
+  // Si llega a 0, desactivar botón
   if (producto.stock <= 0) {
     const btn = document.getElementById(`btn-${code}`);
     if (btn) btn.disabled = true;
@@ -120,6 +130,9 @@ function agregarAlCarrito(code, description, price) {
 
   renderCarrito();
 }
+
+
+// Renderizar carrito
 
 function renderCarrito() {
   const tbody = document.getElementById("carrito-body");
@@ -145,6 +158,9 @@ function renderCarrito() {
   document.getElementById("total").textContent = total.toFixed(2);
 }
 
+
+// Cambiar cantidad en carrito
+
 function cambiarCantidad(index, cantidad) {
   cantidad = parseInt(cantidad);
   const producto = productos.find(p => p.code === carrito[index].code);
@@ -161,9 +177,10 @@ function cambiarCantidad(index, cantidad) {
   carrito[index].cantidad = cantidad;
   carrito[index].subtotal = carrito[index].cantidad * carrito[index].price;
 
-  // Actualizar stock en catalogo
+  // Actualizar stock en catálogo
   const stockSpan = document.getElementById(`stock-${producto.code}`);
   if (stockSpan) stockSpan.textContent = producto.stock;
+
   if (producto.stock <= 0) {
     const btn = document.getElementById(`btn-${producto.code}`);
     if (btn) btn.disabled = true;
@@ -172,6 +189,29 @@ function cambiarCantidad(index, cantidad) {
   renderCarrito();
 }
 
+
+// Eliminar producto del carrito
+
+function eliminarDelCarrito(index) {
+  const item = carrito[index];
+  const producto = productos.find(p => p.code === item.code);
+
+  // devolver stock al catálogo
+  producto.stock += item.cantidad;
+
+  const stockSpan = document.getElementById(`stock-${producto.code}`);
+  if (stockSpan) stockSpan.textContent = producto.stock;
+
+  // reactivar botón si vuelve stock
+  const btn = document.getElementById(`btn-${producto.code}`);
+  if (btn) btn.disabled = false;
+
+  carrito.splice(index, 1);
+  renderCarrito();
+}
+
+
+// Remito
 
 function generarNumeroRemito() {
   const fecha = new Date();
@@ -231,6 +271,9 @@ function mostrarRemito(remito) {
   document.getElementById("remito-section").style.display = "block";
 }
 
+
+// Enviar por Email
+
 async function enviarEmail() {
   if (!remitoActual) return alert("No hay remito para enviar.");
 
@@ -259,9 +302,13 @@ async function enviarEmail() {
   }
 }
 
+
 // Eventos
+
 document.getElementById("finalizar").addEventListener("click", finalizarPedido);
 document.getElementById("enviar").addEventListener("click", enviarEmail);
 
-// Inicializacion
+
+// Inicialización
+
 cargarProductos();
