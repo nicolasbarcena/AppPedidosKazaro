@@ -75,7 +75,7 @@ select:focus {
   font-size: 20px;
   font-weight: 500;
   transition: all 0.3s ease;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur (6px) ;
   color: #0056b3;
 }
 
