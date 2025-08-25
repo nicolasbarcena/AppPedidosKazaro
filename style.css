@@ -6,7 +6,7 @@
 }
 
 body {
-  background: #82add7;
+  background: #d0e7ff; /* Cambiado a un azul claro */
   color: #333;
   line-height: 1.5;
   padding: 10px;
@@ -18,7 +18,7 @@ body {
   background: #fff;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 /*  Títulos  */
@@ -26,33 +26,35 @@ h1 {
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 25px;
-  color: #2980b9;
+  color: #2980b9; /* Azul */
 }
 
 h2 {
   margin: 20px 0 10px;
-  color: #34495e;
+  color: #000000; /* Azul oscuro */
   font-size: 1.4rem;
 }
 
 /*  Formulario cliente  */
-input, select {
+input,
+select {
   width: 100%;
   padding: 12px;
   margin: 6px 0 14px;
   border: none;
   border-radius: 14px;
   font-size: 1rem;
-  background: rgba(255,255,255,0.8);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(8px);
-  box-shadow: inset 0 2px 6px rgba(0,0,0,0.08);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
   transition: all 0.3s;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
   outline: none;
   background: #fff;
-  box-shadow: 0 0 0 3px #c7d2fe;
+  box-shadow: 0 0 0 3px #b0c4e9; /* Azul claro */
 }
 
 /*  Categorías  */
@@ -66,25 +68,26 @@ input:focus, select:focus {
 
 .categoria-btn {
   padding: 14px 20px;
-  background: rgba(255,255,255,0.6);
-  border-radius: 14px;
-  border: 1px solid #ddd;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  border: 2px solid #3fa2a7;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 500;
   transition: all 0.3s ease;
   backdrop-filter: blur(6px);
+  color: #0056b3;
 }
 
 .categoria-btn:hover {
-  background: #4f46e5;
+  background: #4f86f7; 
   color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(79,70,229,0.25);
+  transform: translateY(-3px) scale(1.08);
+  box-shadow: 0 6px 14px rgba(13, 12, 22, 0.455);
 }
 
 .categoria-btn.active {
-  background: #4f46e5;
+  background: #4f86f7; 
   color: #fff;
 }
 
@@ -106,7 +109,7 @@ input:focus, select:focus {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease, box-shadow 0.4s ease;
   position: relative;
   overflow: hidden;
@@ -116,14 +119,17 @@ input:focus, select:focus {
 .producto::before {
   content: "";
   position: absolute;
-  top: 0; left: 0; right: 0; height: 6px;
-  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(135deg, #4facfe, #00f2fe); /* Azul */
 }
 
 /* Animación hover */
 .producto:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
 }
 
 /* Imagen */
@@ -145,7 +151,7 @@ input:focus, select:focus {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 8px;
-  color: #2c3e50;
+  color: #2c3e50; /* Azul oscuro */
   transition: color 0.3s;
 }
 
@@ -165,7 +171,7 @@ input:focus, select:focus {
 /* Botón */
 .producto button {
   margin-top: auto;
-  background: #27ae60;
+  background: #007bff; /* Azul fuerte */
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -173,25 +179,23 @@ input:focus, select:focus {
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
-  
+  transition: all 0.3s;
 }
 
 .producto button:hover {
-  background: linear-gradient(135deg, #219150, #27ae60);
+  background: linear-gradient(135deg, #0056b3, #007bff); /* Azul fuerte */
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
 }
 
 .producto button:focus-visible {
-  outline: 3px solid #4facfe;
+  outline: 3px solid #4facfe; /* Azul claro */
   outline-offset: 3px;
 }
 
-
 /*  Carrito  */
 .carrito {
-  overflow-x: auto; 
+  overflow-x: auto;
 }
 
 .carrito table {
@@ -199,10 +203,10 @@ input:focus, select:focus {
   border-collapse: collapse;
   margin-top: 15px;
   font-size: 0.95rem;
-  min-width: 500px; 
+  min-width: 500px;
 }
 
-.carrito th, 
+.carrito th,
 .carrito td {
   border: 1px solid #ddd;
   padding: 10px;
@@ -210,7 +214,7 @@ input:focus, select:focus {
 }
 
 .carrito th {
-  background: #3498db;
+  background: #007bff; /* Azul fuerte */
   color: #fff;
 }
 
@@ -230,7 +234,7 @@ input:focus, select:focus {
 }
 
 #finalizar {
-  background: #e67e22;
+  background: #195c60; /* Azul fuerte */
   color: #fff;
   border: none;
   padding: 12px 18px;
@@ -238,11 +242,12 @@ input:focus, select:focus {
   cursor: pointer;
   margin-top: 10px;
   transition: background 0.3s;
-  width: 100%; 
+  width: 100%;
+  font-weight: 700;
 }
 
 #finalizar:hover {
-  background: #ca6f1e;
+  background: #0056b3; /* Azul oscuro */
 }
 
 /*  Remito  */
@@ -252,7 +257,7 @@ input:focus, select:focus {
   background: #f9fafc;
   border: 1px solid #ddd;
   border-radius: 10px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
 }
 
 .remito table {
@@ -262,7 +267,7 @@ input:focus, select:focus {
 }
 
 .remito th {
-  background: #2c3e50;
+  background: #007bff; /* Azul fuerte */
   color: #fff;
   padding: 10px;
 }
@@ -274,8 +279,8 @@ input:focus, select:focus {
 }
 
 #enviar {
-  background: linear-gradient(135deg, #8e44ad, #6c3483);
-  color: #fff;
+  background:  #195c60; /* Azul degradado */
+  color: #ffffff;
   border: none;
   padding: 14px 18px;
   border-radius: 8px;
@@ -283,13 +288,13 @@ input:focus, select:focus {
   margin-top: 15px;
   transition: transform 0.2s, background 0.3s;
   width: 100%;
+  font-weight: 700;  
 }
 
 #enviar:hover {
-  background: linear-gradient(135deg, #6c3483, #4a235a);
+  background: linear-gradient(135deg, #2c3e50, #007bff); /* Azul degradado */
   transform: translateY(-2px);
 }
-
 
 /*  Responsive  */
 @media (max-width: 768px) {
@@ -298,15 +303,15 @@ input:focus, select:focus {
   }
 
   .categoria-btn {
-    flex: 1 1 45%; 
+    flex: 1 1 45%;
   }
 
-  .carrito table, 
+  .carrito table,
   .remito table {
     font-size: 0.85rem;
   }
-  
-  .carrito th, 
+
+  .carrito th,
   .carrito td {
     padding: 6px;
   }
@@ -322,13 +327,13 @@ input:focus, select:focus {
   }
 
   .categoria-btn {
-    flex: 1 1 100%; 
+    flex: 1 1 100%;
     padding: 12px;
     font-size: 0.9rem;
   }
 
   .catalogo #productos {
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
   }
 
   .producto {
@@ -348,6 +353,7 @@ input:focus, select:focus {
     font-size: 0.9rem;
   }
 }
+
 .paginacion {
   display: flex;
   justify-content: center;
@@ -356,7 +362,7 @@ input:focus, select:focus {
 }
 
 .paginacion button {
-  background: #4CAF50;
+  background: #007bff; /* Azul fuerte */
   color: white;
   border: none;
   padding: 8px 14px;
@@ -366,7 +372,7 @@ input:focus, select:focus {
 }
 
 .paginacion button:hover {
-  background: #45a049;
+  background: #0056b3; /* Azul oscuro */
 }
 
 @media (max-width: 600px) {
@@ -375,4 +381,5 @@ input:focus, select:focus {
     gap: 8px;
   }
 }
+
 
