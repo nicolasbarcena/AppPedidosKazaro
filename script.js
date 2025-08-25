@@ -1,4 +1,4 @@
-// Configuración EmailJS
+// EmailJS
 const EMAILJS_PUBLIC_KEY = "g94YTgSjLp2km1bcS";
 const SERVICE_ID = "service_40ttmon";
 const TEMPLATE_ID = "template_462n4v4";
@@ -10,7 +10,7 @@ let carrito = [];
 let remitoActual = null;
 let productos = [];   
 
-// Variables para paginación
+// Variables para paginacion
 let paginaActual = 1;
 const productosPorPagina = 15;
 
@@ -20,7 +20,7 @@ async function cargarProductos() {
   productos = await res.json();
 }
 
-// Mostrar productos filtrados por categoría con paginación
+// Mostrar productos filtrados por categoria 
 function mostrarProductos(categoria, pagina = 1) {
   const contenedor = document.getElementById("productos");
   contenedor.innerHTML = "";
@@ -32,28 +32,32 @@ function mostrarProductos(categoria, pagina = 1) {
     return;
   }
 
-  // Paginación
+  // Paginacion
   const inicio = (pagina - 1) * productosPorPagina;
   const fin = inicio + productosPorPagina;
   const paginaProductos = filtrados.slice(inicio, fin);
 
-  // Mostrar productos de la página actual
+  // Mostrar productos
   paginaProductos.forEach(prod => {
     const div = document.createElement("div");
     div.classList.add("producto");
+
     div.innerHTML = `
       <h3>${prod.description}</h3>
       <p>Código: ${prod.code}</p>
       <p>Precio: $${prod.price}</p>
-      <p>Stock: ${prod.stock}</p>
-      <button onclick="agregarAlCarrito('${prod.code}','${prod.description}',${prod.price})">
+      <p>Stock: <span id="stock-${prod.code}">${prod.stock}</span></p>
+      <button id="btn-${prod.code}" 
+        ${prod.stock <= 0 ? "disabled" : ""} 
+        onclick="agregarAlCarrito('${prod.code}','${prod.description}',${prod.price})">
         Agregar
       </button>
     `;
+
     contenedor.appendChild(div);
   });
 
-  // Controles de paginación
+  // Controles de paginacion
   const paginacion = document.createElement("div");
   paginacion.classList.add("paginacion");
 
@@ -74,14 +78,25 @@ function mostrarProductos(categoria, pagina = 1) {
   contenedor.appendChild(paginacion);
 }
 
-// Carrito y Remito
-
+// Agregar al carrito segun stock
 function agregarAlCarrito(code, description, price) {
-  const existente = carrito.find(p => p.code === code);
+  const producto = productos.find(p => p.code === code);
+
+  if (!producto || producto.stock <= 0) {
+    alert("Este producto no tiene stock disponible.");
+    return;
+  }
+
+  let existente = carrito.find(p => p.code === code);
 
   if (existente) {
-    existente.cantidad++;
-    existente.subtotal = existente.cantidad * existente.price;
+    if (existente.cantidad < producto.stock) {
+      existente.cantidad++;
+      existente.subtotal = existente.cantidad * existente.price;
+      producto.stock--; 
+    } else {
+      alert(`Solo quedan ${producto.stock} unidades disponibles.`);
+    }
   } else {
     carrito.push({
       code,
@@ -90,6 +105,17 @@ function agregarAlCarrito(code, description, price) {
       cantidad: 1,
       subtotal: price
     });
+    producto.stock--; // primera unidad restada
+  }
+
+  // Actualizar stock en pantalla
+  const stockSpan = document.getElementById(`stock-${code}`);
+  if (stockSpan) stockSpan.textContent = producto.stock;
+
+  // Si llega a 0, desactivar boton
+  if (producto.stock <= 0) {
+    const btn = document.getElementById(`btn-${code}`);
+    if (btn) btn.disabled = true;
   }
 
   renderCarrito();
@@ -120,15 +146,32 @@ function renderCarrito() {
 }
 
 function cambiarCantidad(index, cantidad) {
-  carrito[index].cantidad = parseInt(cantidad);
+  cantidad = parseInt(cantidad);
+  const producto = productos.find(p => p.code === carrito[index].code);
+
+  if (cantidad > producto.stock + carrito[index].cantidad) {
+    alert(`Stock insuficiente. Solo quedan ${producto.stock + carrito[index].cantidad} unidades.`);
+    cantidad = producto.stock + carrito[index].cantidad;
+  }
+
+  // Ajustar stock disponible
+  const diferencia = cantidad - carrito[index].cantidad;
+  producto.stock -= diferencia;
+
+  carrito[index].cantidad = cantidad;
   carrito[index].subtotal = carrito[index].cantidad * carrito[index].price;
+
+  // Actualizar stock en catalogo
+  const stockSpan = document.getElementById(`stock-${producto.code}`);
+  if (stockSpan) stockSpan.textContent = producto.stock;
+  if (producto.stock <= 0) {
+    const btn = document.getElementById(`btn-${producto.code}`);
+    if (btn) btn.disabled = true;
+  }
+
   renderCarrito();
 }
 
-function eliminarDelCarrito(index) {
-  carrito.splice(index, 1);
-  renderCarrito();
-}
 
 function generarNumeroRemito() {
   const fecha = new Date();
@@ -220,5 +263,5 @@ async function enviarEmail() {
 document.getElementById("finalizar").addEventListener("click", finalizarPedido);
 document.getElementById("enviar").addEventListener("click", enviarEmail);
 
-// Inicialización
+// Inicializacion
 cargarProductos();
