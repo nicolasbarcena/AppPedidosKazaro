@@ -13,12 +13,10 @@ let remitoActual = null;
 let paginaActual = 1;
 const productosPorPagina = 15;
 
-
-// Cargar productos desde JSON
-// URL de tu hoja de Google Sheets publicada como CSV
+// URL  de Google Sheets como CSV
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/1HKNgbMYLHPpw8c9y7D9ENdWsTy2CPTFjhENiTSlIkMc/export?format=csv&gid=0";
 
-let productos = []; // será llenado desde Google Sheets
+let productos = [];
 
 // Convierte CSV a array de objetos
 function csvToJSON(csvText) {
@@ -185,7 +183,6 @@ function renderCarrito() {
   document.getElementById("total").textContent = total.toFixed(2);
 }
 
-
 // Cambiar cantidad en carrito
 function cambiarCantidad(index, cantidad) {
   cantidad = parseInt(cantidad);
@@ -270,7 +267,7 @@ async function finalizarPedido() {
 
   mostrarRemito(remitoActual);
 
-  // Aquí actualizamos Google Sheets
+  // Google Sheets
   try {
     await fetch("https://script.google.com/macros/s/AKfycbyCm8uYBH4ldsdwFGdU0D_HKsnszBb2eEPgkM4bMokLO5qEWR2P7LUDZcFiB4ySkVfHvw/exec", {
       method: "POST",
@@ -307,24 +304,31 @@ function mostrarRemito(remito) {
 
 // Enviar por mail
 async function enviarEmail() {
-if (!remitoActual) return alert("No hay remito para enviar.");
+  if (!remitoActual) return alert("No hay remito para enviar.");
 
-const detalleHTML = remitoActual.items.map(i => `
+  const detalleHTML = remitoActual.items.map(i => `
+  <tr>
+    <td style="border:1px solid #ddd; padding:6px;">${i.code}</td>
+    <td style="border:1px solid #ddd; padding:6px;">${i.description}</td>
+    <td style="border:1px solid #ddd; padding:6px; text-align:center;">${i.cantidad}</td>
+    <td style="border:1px solid #ddd; padding:6px; text-align:right;">$${i.price.toFixed(2)}</td>
+    <td style="border:1px solid #ddd; padding:6px; text-align:right;">$${i.subtotal.toFixed(2)}</td>
+  </tr>
+   `).join("");
 
-<tr> <td style="border:1px solid #ddd; padding:6px;">${i.code}</td> <td style="border:1px solid #ddd; padding:6px;">${i.description}</td> <td style="border:1px solid #ddd; padding:6px; text-align:center;">${i.cantidad}</td> <td style="border:1px solid #ddd; padding:6px; text-align:right;">$${i.price.toFixed(2)}</td> <td style="border:1px solid #ddd; padding:6px; text-align:right;">$${i.subtotal.toFixed(2)}</td> </tr> `).join("");
-try {
-await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-numero: remitoActual.numero,
-cliente: remitoActual.cliente,
-fecha: remitoActual.fecha,
-total: remitoActual.total.toFixed(2),
-detalle: detalleHTML
-});
-alert("Remito enviado con éxito.");
-} catch (err) {
-console.error("Error enviando email:", err);
-alert("Error al enviar el remito.");
-}
+  try {
+    await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+      numero: remitoActual.numero,
+      cliente: remitoActual.cliente,
+      fecha: remitoActual.fecha,
+      total: remitoActual.total.toFixed(2),
+      detalle: detalleHTML
+    });
+    alert("Remito enviado con éxito.");
+  } catch (err) {
+    console.error("Error enviando email:", err);
+    alert("Error al enviar el remito.");
+  }
 }
 
 // Eventos
