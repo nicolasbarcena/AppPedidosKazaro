@@ -8,17 +8,56 @@ emailjs.init(EMAILJS_PUBLIC_KEY);
 // Variables
 let carrito = [];
 let remitoActual = null;
-let productos = [];
+
 
 let paginaActual = 1;
 const productosPorPagina = 15;
 
 
 // Cargar productos desde JSON
-async function cargarProductos() {
-  const res = await fetch("products.json");
-  productos = await res.json();
+// URL de tu hoja de Google Sheets publicada como CSV
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/1HKNgbMYLHPpw8c9y7D9ENdWsTy2CPTFjhENiTSlIkMc/export?format=csv&gid=0";
+
+let productos = []; // será llenado desde Google Sheets
+
+// Convierte CSV a array de objetos
+function csvToJSON(csvText) {
+  const rows = csvText.trim().split("\n").map(r => r.split(","));
+  const headers = rows.shift().map(h => h.trim().toLowerCase()); 
+  return rows.map(r =>
+    headers.reduce((obj, h, i) => {
+      obj[h] = r[i] ? r[i].trim() : "";
+      return obj;
+    }, {})
+  );
 }
+
+// Cargar productos desde Google Sheets
+async function cargarProductos() {
+  try {
+    const res = await fetch(SHEET_URL);
+    const text = await res.text();
+
+    const data = Papa.parse(text, {
+      header: true,   // primera fila como cabeceras
+      skipEmptyLines: true
+    });
+
+    productos = data.data.map(p => ({
+      code: p.code,
+      description: p.description,
+      category: p.category,
+      price: parseFloat(p.price || 0),
+      stock: parseInt(p.stock || 0)
+    }));
+
+    console.log("Productos cargados desde Sheets:", productos);
+  } catch (err) {
+    console.error("Error cargando productos desde Google Sheets:", err);
+  }
+}
+
+
 
 
 // Mostrar productos filtrados por categoria
