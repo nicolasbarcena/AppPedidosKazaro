@@ -268,13 +268,30 @@ async function finalizarPedido() {
   mostrarRemito(remitoActual);
 
   // Google Sheets
-  try {
-    await fetch("https://script.google.com/macros/s/AKfycbyCm8uYBH4ldsdwFGdU0D_HKsnszBb2eEPgkM4bMokLO5qEWR2P7LUDZcFiB4ySkVfHvw/exec", {
+try {
+    const res = await fetch("https://script.google.com/macros/s/AKfycbym93C9owPRg7Qh-f2SO83qfv_cEHoj0J87VUE6B3AKrXgMFkMVihtE5Q-SPrNXksTVDw/exec", {
       method: "POST",
       body: JSON.stringify({ items: carrito }),
       headers: { "Content-Type": "application/json" }
     });
-    console.log("Stock actualizado en Google Sheets");
+
+    const data = await res.json();
+
+    if (data.success) {
+      console.log("Stock actualizado en Sheets:", data.updated);
+
+      // 🔹 Refrescar el stock en la UI
+      data.updated.forEach(u => {
+        const stockSpan = document.getElementById(`stock-${u.code}`);
+        if (stockSpan) stockSpan.textContent = u.stock;
+
+        const btn = document.getElementById(`btn-${u.code}`);
+        if (btn && u.stock <= 0) btn.disabled = true;
+      });
+    } else {
+      console.error("Error en respuesta de Apps Script:", data.error);
+    }
+
   } catch (err) {
     console.error("Error actualizando stock:", err);
   }
