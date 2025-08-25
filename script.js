@@ -53,17 +53,17 @@ function mostrarProductos(categoria, pagina = 1) {
       <h3>${prod.description}</h3>
       <p>Código: ${prod.code}</p>
       <p>Precio: $${prod.price}</p>
-      <p>Stock: <span id="stock-${prod.code}">${prod.stock}</span></p> 
       <button id="btn-${prod.code}" 
-        ${prod.stock <= 0 ? "disabled" : ""} 
-        onclick="agregarAlCarrito('${prod.code}','${prod.description}',${prod.price})">
-        Agregar
+      ${prod.stock <= 0 ? "disabled" : ""} 
+      onclick="agregarAlCarrito('${prod.code}','${prod.description}',${prod.price})">
+      Agregar
       </button>
-    `;
-
-    contenedor.appendChild(div);
-  });
-
+      `;
+      
+      contenedor.appendChild(div);
+    });
+    // <p>Stock: <span id="stock-${prod.code}">${prod.stock}</span></p> para mostar el stock entre linea 55 - 56
+    
   // Controles de paginación
   const paginacion = document.createElement("div"); 
   paginacion.classList.add("paginacion");
