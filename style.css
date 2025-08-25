@@ -1,4 +1,3 @@
-/* ===== Reset ===== */
 * {
   margin: 0;
   padding: 0;
@@ -7,7 +6,7 @@
 }
 
 body {
-  background: #f4f6f8;
+  background: #82add7;
   color: #333;
   line-height: 1.5;
   padding: 10px;
@@ -22,7 +21,7 @@ body {
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-/* ===== Títulos ===== */
+/*  Títulos  */
 h1 {
   text-align: center;
   font-size: 2.5rem;
@@ -36,57 +35,60 @@ h2 {
   font-size: 1.4rem;
 }
 
-/* ===== Formulario cliente ===== */
-.form-section input {
+/*  Formulario cliente  */
+input, select {
   width: 100%;
-  padding: 10px;
-  margin-top: 6px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  padding: 12px;
+  margin: 6px 0 14px;
+  border: none;
+  border-radius: 14px;
   font-size: 1rem;
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.08);
+  transition: all 0.3s;
 }
 
-/* ===== Categorías ===== */
+input:focus, select:focus {
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 0 3px #c7d2fe;
+}
+
+/*  Categorías  */
 .categoria-lista {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin: 20px 0;
+  gap: 15px;
   justify-content: center;
+  margin: 25px 0;
 }
 
 .categoria-btn {
-  flex: 1 1 160px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  padding: 20px;
-  background: white;
-  border: 2px solid #3498db;
-  color: #1c5b86;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 14px 20px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 14px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: 500;
   transition: all 0.3s ease;
-  font-weight: 600;
+  backdrop-filter: blur(6px);
 }
 
 .categoria-btn:hover {
-  background: #3498db;
-  color: white;
-  transform: translateY(-4px);
+  background: #4f46e5;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(79,70,229,0.25);
 }
-
 
 .categoria-btn.active {
-  background: linear-gradient(135deg, #1abc9c, #16a085);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  transform: scale(1.05);
+  background: #4f46e5;
+  color: #fff;
 }
 
-
-/* ===== Catálogo Moderno ===== */
+/*  Catálogo Moderno  */
 .catalogo #productos {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -172,7 +174,7 @@ h2 {
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
-  /*box-shadow: inset 0 -3px 0 rgba(0,0,0,0.15)*/
+  
 }
 
 .producto button:hover {
@@ -187,9 +189,9 @@ h2 {
 }
 
 
-/* ===== Carrito ===== */
+/*  Carrito  */
 .carrito {
-  overflow-x: auto; /* ✅ scroll en móviles */
+  overflow-x: auto; 
 }
 
 .carrito table {
@@ -197,7 +199,7 @@ h2 {
   border-collapse: collapse;
   margin-top: 15px;
   font-size: 0.95rem;
-  min-width: 500px; /* ✅ asegura que se pueda scrollear si no entra */
+  min-width: 500px; 
 }
 
 .carrito th, 
@@ -236,14 +238,14 @@ h2 {
   cursor: pointer;
   margin-top: 10px;
   transition: background 0.3s;
-  width: 100%; /* ✅ full width en móviles */
+  width: 100%; 
 }
 
 #finalizar:hover {
   background: #ca6f1e;
 }
 
-/* ===== Remito ===== */
+/*  Remito  */
 .remito {
   margin-top: 25px;
   padding: 20px;
@@ -289,14 +291,14 @@ h2 {
 }
 
 
-/* ===== Responsive ===== */
+/*  Responsive  */
 @media (max-width: 768px) {
   h1 {
     font-size: 1.8rem;
   }
 
   .categoria-btn {
-    flex: 1 1 45%; /* ✅ dos botones por fila en tablets */
+    flex: 1 1 45%; 
   }
 
   .carrito table, 
@@ -320,13 +322,13 @@ h2 {
   }
 
   .categoria-btn {
-    flex: 1 1 100%; /* ✅ botones uno debajo del otro */
+    flex: 1 1 100%; 
     padding: 12px;
     font-size: 0.9rem;
   }
 
   .catalogo #productos {
-    grid-template-columns: 1fr; /* ✅ productos en 1 columna */
+    grid-template-columns: 1fr; 
   }
 
   .producto {

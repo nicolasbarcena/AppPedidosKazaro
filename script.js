@@ -1,15 +1,11 @@
-
-// EmailJS Config
-
+// EmailJS 
 const EMAILJS_PUBLIC_KEY = "g94YTgSjLp2km1bcS";
 const SERVICE_ID = "service_40ttmon";
 const TEMPLATE_ID = "template_462n4v4";
 
 emailjs.init(EMAILJS_PUBLIC_KEY);
 
-
 // Variables
-
 let carrito = [];
 let remitoActual = null;
 let productos = [];
@@ -19,15 +15,13 @@ const productosPorPagina = 15;
 
 
 // Cargar productos desde JSON
-
 async function cargarProductos() {
   const res = await fetch("products.json");
   productos = await res.json();
 }
 
 
-// Mostrar productos filtrados por categoría
-
+// Mostrar productos filtrados por categoria
 function mostrarProductos(categoria, pagina = 1) {
   const contenedor = document.getElementById("productos");
   contenedor.innerHTML = "";
@@ -39,7 +33,7 @@ function mostrarProductos(categoria, pagina = 1) {
     return;
   }
 
-  // Paginación
+  // Paginacion
   const inicio = (pagina - 1) * productosPorPagina;
   const fin = inicio + productosPorPagina;
   const paginaProductos = filtrados.slice(inicio, fin);
@@ -64,7 +58,7 @@ function mostrarProductos(categoria, pagina = 1) {
     });
     // <p>Stock: <span id="stock-${prod.code}">${prod.stock}</span></p> para mostar el stock entre linea 55 - 56
     
-  // Controles de paginación
+  // Controles de paginacion
   const paginacion = document.createElement("div"); 
   paginacion.classList.add("paginacion");
 
@@ -87,11 +81,10 @@ function mostrarProductos(categoria, pagina = 1) {
 
 
 // Agregar al carrito según stock
-
 function agregarAlCarrito(code, description, price) {
   const producto = productos.find(p => p.code === code);
 
-  // 🔴 Validación de stock
+  //  Validación de stock
   if (!producto || producto.stock <= 0) {
     alert("Este producto no tiene stock disponible.");
     return;
@@ -115,14 +108,14 @@ function agregarAlCarrito(code, description, price) {
       cantidad: 1,
       subtotal: price
     });
-    producto.stock--; // primera unidad restada
+    producto.stock--; 
   }
 
   // Actualizar stock en pantalla
   const stockSpan = document.getElementById(`stock-${code}`);
   if (stockSpan) stockSpan.textContent = producto.stock;
 
-  // Si llega a 0, desactivar botón
+  // Si llega a 0 - desactivar boton
   if (producto.stock <= 0) {
     const btn = document.getElementById(`btn-${code}`);
     if (btn) btn.disabled = true;
@@ -133,7 +126,6 @@ function agregarAlCarrito(code, description, price) {
 
 
 // Renderizar carrito
-
 function renderCarrito() {
   const tbody = document.getElementById("carrito-body");
   tbody.innerHTML = "";
@@ -160,7 +152,6 @@ function renderCarrito() {
 
 
 // Cambiar cantidad en carrito
-
 function cambiarCantidad(index, cantidad) {
   cantidad = parseInt(cantidad);
   const producto = productos.find(p => p.code === carrito[index].code);
@@ -177,7 +168,7 @@ function cambiarCantidad(index, cantidad) {
   carrito[index].cantidad = cantidad;
   carrito[index].subtotal = carrito[index].cantidad * carrito[index].price;
 
-  // Actualizar stock en catálogo
+  // Actualizar stock en catalogo
   const stockSpan = document.getElementById(`stock-${producto.code}`);
   if (stockSpan) stockSpan.textContent = producto.stock;
 
@@ -189,9 +180,7 @@ function cambiarCantidad(index, cantidad) {
   renderCarrito();
 }
 
-
 // Eliminar producto del carrito
-
 function eliminarDelCarrito(index) {
   const item = carrito[index];
   const producto = productos.find(p => p.code === item.code);
@@ -202,7 +191,7 @@ function eliminarDelCarrito(index) {
   const stockSpan = document.getElementById(`stock-${producto.code}`);
   if (stockSpan) stockSpan.textContent = producto.stock;
 
-  // reactivar botón si vuelve stock
+  // reactivar boton si vuelve stock
   const btn = document.getElementById(`btn-${producto.code}`);
   if (btn) btn.disabled = false;
 
@@ -210,9 +199,7 @@ function eliminarDelCarrito(index) {
   renderCarrito();
 }
 
-
 // Remito
-
 function generarNumeroRemito() {
   const fecha = new Date();
   const dd = String(fecha.getDate()).padStart(2, "0");
@@ -271,9 +258,7 @@ function mostrarRemito(remito) {
   document.getElementById("remito-section").style.display = "block";
 }
 
-
-// Enviar por Email
-
+// Enviar por mail
 async function enviarEmail() {
   if (!remitoActual) return alert("No hay remito para enviar.");
 
@@ -302,13 +287,9 @@ async function enviarEmail() {
   }
 }
 
-
 // Eventos
-
 document.getElementById("finalizar").addEventListener("click", finalizarPedido);
 document.getElementById("enviar").addEventListener("click", enviarEmail);
 
-
-// Inicialización
-
+// Inicializacion
 cargarProductos();
