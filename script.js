@@ -57,9 +57,6 @@ async function cargarProductos() {
   }
 }
 
-
-
-
 // Mostrar productos filtrados por categoria
 function mostrarProductos(categoria, pagina = 1) {
   const contenedor = document.getElementById("productos");
@@ -117,7 +114,6 @@ function mostrarProductos(categoria, pagina = 1) {
 
   contenedor.appendChild(paginacion);
 }
-
 
 // Agregar al carrito según stock
 function agregarAlCarrito(code, description, price) {
@@ -250,7 +246,7 @@ function generarNumeroRemito() {
   return `REM-${dd}${mm}${yy}-${hh}${mi}${ss}`;
 }
 
-function finalizarPedido() {
+async function finalizarPedido() {
   const cliente = document.getElementById("cliente").value.trim();
   if (!cliente) {
     alert("Ingrese nombre y apellido.");
@@ -273,6 +269,18 @@ function finalizarPedido() {
   };
 
   mostrarRemito(remitoActual);
+
+  // Aquí actualizamos Google Sheets
+  try {
+    await fetch("https://script.google.com/macros/s/AKfycbyCm8uYBH4ldsdwFGdU0D_HKsnszBb2eEPgkM4bMokLO5qEWR2P7LUDZcFiB4ySkVfHvw/exec", {
+      method: "POST",
+      body: JSON.stringify({ items: carrito }),
+      headers: { "Content-Type": "application/json" }
+    });
+    console.log("Stock actualizado en Google Sheets");
+  } catch (err) {
+    console.error("Error actualizando stock:", err);
+  }
 }
 
 function mostrarRemito(remito) {
@@ -299,31 +307,24 @@ function mostrarRemito(remito) {
 
 // Enviar por mail
 async function enviarEmail() {
-  if (!remitoActual) return alert("No hay remito para enviar.");
+if (!remitoActual) return alert("No hay remito para enviar.");
 
-  const detalleHTML = remitoActual.items.map(i => `
-  <tr>
-    <td style="border:1px solid #ddd; padding:6px;">${i.code}</td>
-    <td style="border:1px solid #ddd; padding:6px;">${i.description}</td>
-    <td style="border:1px solid #ddd; padding:6px; text-align:center;">${i.cantidad}</td>
-    <td style="border:1px solid #ddd; padding:6px; text-align:right;">$${i.price.toFixed(2)}</td>
-    <td style="border:1px solid #ddd; padding:6px; text-align:right;">$${i.subtotal.toFixed(2)}</td>
-  </tr>
-   `).join("");
+const detalleHTML = remitoActual.items.map(i => `
 
-  try {
-    await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-      numero: remitoActual.numero,
-      cliente: remitoActual.cliente,
-      fecha: remitoActual.fecha,
-      total: remitoActual.total.toFixed(2),
-      detalle: detalleHTML
-    });
-    alert("Remito enviado con éxito.");
-  } catch (err) {
-    console.error("Error enviando email:", err);
-    alert("Error al enviar el remito.");
-  }
+<tr> <td style="border:1px solid #ddd; padding:6px;">${i.code}</td> <td style="border:1px solid #ddd; padding:6px;">${i.description}</td> <td style="border:1px solid #ddd; padding:6px; text-align:center;">${i.cantidad}</td> <td style="border:1px solid #ddd; padding:6px; text-align:right;">$${i.price.toFixed(2)}</td> <td style="border:1px solid #ddd; padding:6px; text-align:right;">$${i.subtotal.toFixed(2)}</td> </tr> `).join("");
+try {
+await emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+numero: remitoActual.numero,
+cliente: remitoActual.cliente,
+fecha: remitoActual.fecha,
+total: remitoActual.total.toFixed(2),
+detalle: detalleHTML
+});
+alert("Remito enviado con éxito.");
+} catch (err) {
+console.error("Error enviando email:", err);
+alert("Error al enviar el remito.");
+}
 }
 
 // Eventos
