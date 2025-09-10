@@ -384,3 +384,31 @@ select:focus {
 }
 
 
+
+.logo {
+  height: 70px;
+  display: block;
+  margin: 0 auto;
+}
+
+
+.iso-fixed {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  width: 80px;
+  opacity: 0.9;
+  z-index: 1000;
+}
+
+
+@media (max-width: 768px) {
+  .iso-fixed {
+    position: static;   
+    display: block;
+    margin: 12px auto 0 auto; 
+    width: 200px; 
+    content: url("normasiso.png"); 
+  }
+}
+
